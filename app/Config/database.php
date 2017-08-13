@@ -66,13 +66,13 @@
  */
 class DATABASE_CONFIG {
 
-	public $default = array(
+	/*public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'password',
-		'database' => 'database_name',
+		'host' => 'us-cdbr-iron-east-05.cleardb.net',
+		'login' => 'b10cf9bb428c6f',
+		'password' => 'a96a1e84',
+		'database' => 'heroku_4e813c53fdfafb1',
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
@@ -86,5 +86,33 @@ class DATABASE_CONFIG {
 		'database' => 'test_database_name',
 		'prefix' => '',
 		//'encoding' => 'utf8',
-	);
+	);*/
+
+    function __construct() {
+
+        $url = parse_url(getenv('CLEARDB_DATABASE_URL'));
+
+        $this->default = array(
+            'datasource' => 'Database/Mysql',
+            'persistent' => false,
+            'host' => $url['host'],
+            'login' => $url['user'],
+            'password' => $url['pass'],
+            'database' => substr($url['path'],1),
+            'prefix' => '',
+            //'encoding' => 'utf8',
+        );
+
+        $this->test = array(
+            'datasource' => 'Database/Mysql',
+            'persistent' => false,
+            'host' => 'localhost',
+            'login' => 'user',
+            'password' => 'password',
+            'database' => 'test_database_name',
+            'prefix' => '',
+            //'encoding' => 'utf8',
+        );
+
+    }
 }
